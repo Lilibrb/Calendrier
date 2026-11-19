@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enregistrer une voix</title>
+    <style>
+        .contenu-page {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .contenu-page.actif{
+            display: block;
+        }
+
+        .bouton-jour {
+            padding: 10px;
+        }
+
+        .bouton-jour.actif {
+            color: aqua;
+        }
+
+    </style>
+</head>
+<body data-jour="lundi">
+    <h1>Mes enregistrements</h1>
+    <button id="record">● REC</button>
+    <button id="stop" disabled>■ STOP</button>
+    <audio controls></audio>
+
+    <div class="onglets_jours">
+        <button class="bouton-jour actif" onclick="changerJour('lundi')">Lundi</button>
+        <button class="bouton-jour" onclick="changerJour('mardi')">Mardi</button>
+        <button class="bouton-jour" onclick="changerJour('mercredi')">Mercredi</button>
+        <button class="bouton-jour" onclick="changerJour('jeudi')">Jeudi</button>
+        <button class="bouton-jour" onclick="changerJour('vendredi')">Vendredi</button>
+        <button class="bouton-jour" onclick="changerJour('samedi')">Samedi</button>
+        <button class="bouton-jour" onclick="changerJour('dimanche')">Dimanche</button>
+    </div>
+
+    <div id="lundi" class="contenu-page actif">
+        <h2>02/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="mardi" class="contenu-page">
+        <h2>03/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="mercredi" class="contenu-page">
+        <h2>04/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="jeudi" class="contenu-page">
+        <h2>05/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="vendredi" class="contenu-page">
+        <h2>06/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="samedi" class="contenu-page">
+        <h2>07/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="dimanche" class="contenu-page">
+        <h2>08/11/2026</h2>
+        <div class="liste-audios"></div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
