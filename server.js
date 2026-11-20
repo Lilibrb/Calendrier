@@ -1,7 +1,7 @@
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
-import { mkdir, unlink, writeFile} from "node:fs/promises";
+import { mkdir, unlink, writeFile,readFile,stat} from "node:fs/promises";
 import { createServer } from "node:http";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -60,7 +60,7 @@ async function saveVoice(request, jour) {
 
   await mkdir(folder,{recursive:true});
 
-  const type = request.headers["contents-type"]??"";
+  const type = request.headers;
 
   const extension = type.includes("mp4")?"m4a" : "webm";
 
@@ -120,7 +120,7 @@ const server = createServer(async (request, response) => {
 
       console.log("Audio enregistré:", audioURL);
     } catch(error){
-      console.error(error);("Erreur d'enregistrement:", error);
+      console.error("Erreur d'enregistrement:", error);
 
       if(!response.destroyed &&!response.headersSent){
         response.writeHead(500,{

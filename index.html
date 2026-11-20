@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enregistrer une voix</title>
+    <link rel="stylesheet" href="https://use.typekit.net/amw0mlw.css">
     <style>
+        body{
+            background-color:#64754b;
+        }
         .contenu-page {
             display: none;
             background: white;
@@ -21,13 +25,19 @@
         }
 
         .bouton-jour.actif {
-            color: aqua;
+            color: rgb(102, 167, 19);
+        }
+
+        h2{
+        font-family: "overtime-lcd-pro", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        color: black;
         }
 
     </style>
 </head>
 <body data-jour="lundi">
-    <h1>Mes enregistrements</h1>
     <button id="record">● REC</button>
     <button id="stop" disabled>■ STOP</button>
     <audio controls></audio>
