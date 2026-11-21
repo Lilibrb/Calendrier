@@ -4,6 +4,10 @@
 
         body{
             background-color:#64754b;
+            font-family: "overtime-lcd-pro", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            color: black;
         }
         
         .contenu-page {
@@ -23,13 +27,6 @@
             color: rgb(102, 167, 19);
         }
 
-        h1{
-        font-family: "overtime-lcd-pro", sans-serif;
-        font-weight: 700;
-        font-style: normal;
-        color: black;
-        }
-
         .entete {
             display: flex;
             justify-content: space-between;
@@ -46,15 +43,12 @@
         .liste-audios {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 10px;
             margin: 20px;
         }
 
         h2 {
-            font-family: "overtime-lcd-pro", sans-serif;
-            font-weight: 700;
-            font-style: normal;
-            color: black;
             margin: 10px 20px;
         }
 

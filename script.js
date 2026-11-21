@@ -41,7 +41,7 @@ async function chargerAudios(jour){
     liste.innerHTML= "";
 
     if (audios.length === 0){
-      liste.textContent = "Aucun enregistrement pour ce jour.";
+      liste.textContent = "Aucun enregistrement pour ce jour";
       return;
     }
 
