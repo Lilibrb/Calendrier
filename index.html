@@ -6,14 +6,18 @@
     <title>Enregistrer une voix</title>
     <link rel="stylesheet" href="https://use.typekit.net/amw0mlw.css">
     <style>
+
+        /* *{
+            border: 1px solid red;
+        } */
+
         body{
             background-color:#64754b;
         }
+        
         .contenu-page {
             display: none;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
+            padding: 10px;
         }
 
         .contenu-page.actif{
@@ -28,15 +32,111 @@
             color: rgb(102, 167, 19);
         }
 
-        h2{
+        h1{
         font-family: "overtime-lcd-pro", sans-serif;
         font-weight: 700;
         font-style: normal;
         color: black;
         }
 
+        .entete {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin:20px 20px 10px 20px;
+        }
+
+        .titre_jour
+        .titre_evenements {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .separateur {
+            border: 1px solid black;
+            margin: 20px;
+            margin-top: 0;
+        }
+
+        .liste-audios {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px;
+        }
+
+        h2 {
+            font-family: "overtime-lcd-pro", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            color: black;
+            margin: 10px 20px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #64754b;
+            padding: 10px 0;
+        }
+
+
     </style>
 </head>
+
+<div id="lundi" class="contenu-page actif">
+    <div class="entete">
+        <h1 class="titre_jour">LUNDI 02 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        </div>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="mardi" class="contenu-page">
+        <h1 class="titre_jour">MARDI 03 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="mercredi" class="contenu-page">
+        <h1 class="titre_jour">MERCREDI 04 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="jeudi" class="contenu-page">
+        <h1 class="titre_jour">JEUDI 05 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="vendredi" class="contenu-page">
+        <h1 class="titre_jour">VENDREDI 06 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="samedi" class="contenu-page">
+        <h1 class="titre_jour">SAMEDI 07 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
+    <div id="dimanche" class="contenu-page">
+        <h1 class="titre_jour">DIMANCHE 08 NOV</h1>
+        <h1 class="titre_evenements">EVENEMENTS</h1>
+        <hr class="separateur">
+        <div class="liste-audios"></div>
+    </div>
+
 <body data-jour="lundi">
     <button id="record">● REC</button>
     <button id="stop" disabled>■ STOP</button>
@@ -52,40 +152,12 @@
         <button class="bouton-jour" onclick="changerJour('dimanche')">Dimanche</button>
     </div>
 
-    <div id="lundi" class="contenu-page actif">
-        <h2>02/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="mardi" class="contenu-page">
-        <h2>03/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="mercredi" class="contenu-page">
-        <h2>04/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="jeudi" class="contenu-page">
-        <h2>05/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="vendredi" class="contenu-page">
-        <h2>06/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="samedi" class="contenu-page">
-        <h2>07/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
-
-    <div id="dimanche" class="contenu-page">
-        <h2>08/11/2026</h2>
-        <div class="liste-audios"></div>
-    </div>
+    <footer class="footer">
+        <hr class="separateur">
+        <h2>OK ECOUTER</h2>
+        <h2>● REC NOUVEAU</h2>
+        <h2>CORBEILLE SUPR.</h2>
+    </footer>
 
     <script type="module" src="script.js"></script>
 </body>
