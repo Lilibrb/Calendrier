@@ -7,7 +7,7 @@ let jourEnregistrement = null;
 
 async function sendVoice(blob, type,jour) {
 
-  const response = await fetch(`/api/voix?jour=${jour}`, {
+  const response = await fetch(`/api/voix?jour=${encodeURIComponent(jour)}`, {
     method: "POST",
     headers: { "Content-Type": type },
     body: blob,
@@ -31,7 +31,7 @@ async function chargerAudios(jour){
   liste.innerHTML = "Chargement...";
 
   try {
-    const response = await fetch(`/api/voix?jour=${jour}`);
+    const response = await fetch(`/api/voix?jour=${encodeURIComponent(jour)}`);
     if(!response.ok){
       throw new Error("Erreur de chargement");
     }
@@ -61,6 +61,7 @@ async function chargerAudios(jour){
     });
 
   }catch (error){
+    console.error(error);
     liste.textContent="Impossible de charger les audios.";
   }
 }
@@ -94,6 +95,9 @@ async function chargerAudios(jour){
       } catch (error) {
         console.error(error);
         alert("Impossible d'enregistrer : " + error.message);
+      }finally{
+        recordButton.disabled = false;
+        stopButton.disabled = true;
       }
     });
 
@@ -105,6 +109,9 @@ async function chargerAudios(jour){
   } catch (error) {
     console.error(error);
     alert("Impossible d'accéder au microphone.");
+
+    recordButton.disabled = false;
+    stopButton.disabled = true;
   }
 });
 

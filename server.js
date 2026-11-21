@@ -1,7 +1,7 @@
 import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
-import { mkdir, unlink, writeFile } from "node:fs/promises";
+import { mkdir, unlink, writeFile, readdir, stat } from "node:fs/promises";
 import { createServer } from "node:http";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -55,13 +55,11 @@ async function saveVoice(request, jour) {
   }
 
   const id = randomUUID();
-
   const folder = join(VOICES_FOLDER, jour);
 
   await mkdir(folder, { recursive: true });
 
   const type = request.headers["contents-type"] ?? "";
-
   const extension = type.includes("mp4") ? "m4a" : "webm";
 
   const input = join(folder, `${id}.${extension}`);
@@ -74,10 +72,8 @@ async function saveVoice(request, jour) {
       "-y",
       "-i",
       input,
-      "-codec:a",
-      "libmp3lame",
-      "-q:a",
-      "4",
+      "-codec:a","libmp3lame",
+      "-q:a","4",
       output,
     ]);
   } finally {
@@ -85,6 +81,33 @@ async function saveVoice(request, jour) {
   }
 
   return `/voix/${jour}/${id}.mp3`;
+}
+
+async function getVoices(jour){
+  if(!JOURS.includes(jour)){
+    throw new Error("Jour invalide");
+  }
+
+  const folder = join(VOICES_FOLDER,jour);
+  await mkdir(folder,{recursive: true});
+
+  const fichiers = await readdir(folder);
+
+  const audios = await Promise.all(
+    fichiers
+    .filter(fichier => fichier.endsWith("mp3"))
+    .map(async fichier => {
+      const infos = await stat(join(folder, fichier));
+
+      return {
+        url: `/voix/${jour}/${fichier}`,
+        date: infos.birthtime.toLocaleString("fr-FR"),
+        timestamp: infos.birthtimeMs
+      };
+    })
+  );
+
+  return audios.sort((a,b)=> b.timestamp - a.timestamp);
 }
 
 function sendVoiceFile(response, jour, name) {
@@ -101,12 +124,6 @@ function sendVoiceFile(response, jour, name) {
     response.end("Audio introuvable");
   });
 }
-
-const fichiers = {
-  "/": ["index.html", "text/html"],
-  "/index.html": ["index.html", "text/html"],
-  "/script.js": ["script.js", "text/javascript"],
-};
 
 const server = createServer(async (request, response) => {
   const url = new URL(request.url, `http://localhost:${PORT}`);
@@ -147,10 +164,51 @@ const server = createServer(async (request, response) => {
     return;
   }
 
+  if (request.method === "GET" && url.pathname === "/api/voix"){
+    try{
+      const jour = url.searchParams.get("jour");
+      const audios = await getVoices(jour);
+
+      response.writeHead(200, {
+        "Content-Type": "application/json"
+      });
+
+      response.end(JSON.stringify(audios));
+    }catch(error){
+    console.error(error);
+
+    response.writeHead(400, {
+      "Content-Type":"application/json"
+    });
+
+    response.end(JSON.stringify({
+      error: error.message
+    }))
+    }
+    return;
+  }
+
   const match = request.method === "GET" ? VOICE_FILE.exec(url.pathname) : null;
 
   if (match) {
     sendVoiceFile(response, match[1], match[2]);
+    return;
+  }
+
+  const fichiers = {
+  "/": ["index.html", "text/html"],
+  "/index.html":["index.html", "text/html"],
+  "/script.js": ["script.js", "text/javascript"]
+  };
+
+  if (request.method === "GET" && fichiers[url.pathname]){
+    const [nom, type] = fichiers[url.pathname];
+
+    response.writeHead(200,{
+      "Content-Type": type
+    });
+
+    createReadStream(nom).pipe(response);
     return;
   }
 
